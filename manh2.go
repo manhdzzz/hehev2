@@ -70,7 +70,13 @@ func loadProxies(filename string) error {
 	if err != nil {
 		return err
 	}
-	proxies = strings.Split(string(data), "\n")
+	proxyLines := strings.Split(string(data), "\n")
+	// Loại bỏ các dòng trống từ slice proxyLines
+	for _, line := range proxyLines {
+		if trimmedLine := strings.TrimSpace(line); trimmedLine != "" {
+			proxies = append(proxies, trimmedLine)
+		}
+	}
 	return nil
 }
 
