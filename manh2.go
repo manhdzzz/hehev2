@@ -80,7 +80,6 @@ func loadProxies(filename string) error {
 	return nil
 }
 
-
 func main() {
 	var (
 		version bool
@@ -125,16 +124,16 @@ func main() {
 				client := &http.Client{Transport: transport}
 
 				var q *http.Request
-				var err error
+				var reqErr error
 
 				if data == "" {
-					q, err = http.NewRequest("GET", site+"?"+buildblock(rand.Intn(7)+3)+"="+buildblock(rand.Intn(7)+3), nil)
+					q, reqErr = http.NewRequest("GET", site+"?"+buildblock(rand.Intn(7)+3)+"="+buildblock(rand.Intn(7)+3), nil)
 				} else {
-					q, err = http.NewRequest("POST", site, strings.NewReader(data))
+					q, reqErr = http.NewRequest("POST", site, strings.NewReader(data))
 				}
 
-				if err != nil {
-					fmt.Fprintln(os.Stderr, err.Error())
+				if reqErr != nil {
+					fmt.Fprintln(os.Stderr, reqErr.Error())
 					atomic.AddInt32(&cur, -1)
 					continue
 				}
