@@ -66,9 +66,9 @@ func (i *arrayFlags) Set(value string) error {
 }
 
 func loadProxies(filename string) error {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return err
+	data, readErr := ioutil.ReadFile(filename)
+	if readErr != nil {
+		return readErr
 	}
 	proxyLines := strings.Split(string(data), "\n")
 	// Loại bỏ các dòng trống từ slice proxyLines
@@ -79,6 +79,7 @@ func loadProxies(filename string) error {
 	}
 	return nil
 }
+
 
 func main() {
 	var (
